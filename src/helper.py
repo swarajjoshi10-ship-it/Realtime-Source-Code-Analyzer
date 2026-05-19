@@ -10,8 +10,13 @@ from langchain.embeddings import HuggingFaceEmbeddings
 
 #clone any github repo
 def repo_ingestion(repo_url):
-    os.makedirs("repo", exist_ok=True)
-    repo_path="repo/"
+    #os.makedirs("repo", exist_ok=True)
+    #repo_path="repo/"
+    #Repo.clone_from(repo_url, to_path=repo_path)
+    if os.path.exists("repo"):
+        os.system("rmdir /s /q repo")
+
+    repo_path = "repo/"
     Repo.clone_from(repo_url, to_path=repo_path)
 
 #load the repo as documents
@@ -34,6 +39,6 @@ def text_splitter(documents):
 def load_embedding():
     #embeddings = OpenAIEmbeddings(disallowed_special=())
     embeddings = HuggingFaceEmbeddings(
-        model_name="BAAI/bge-m3"
+        model_name="all-MiniLM-L6-v2"
     )
     return embeddings
